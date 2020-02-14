@@ -3,12 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/listIssuesFragment">
+    app:startDestination="@id/listIssues">
 
     <fragment
-        android:id="@+id/listIssuesFragment"
+        android:id="@+id/listIssues"
         android:name="com.example.kotlinissues.presentation.view.listissues.ListIssuesFragment"
-        android:label="ListIssuesFragment"
+        android:label="List Issues"
         tools:layout="@layout/fragment_list_issues">
         <action
             android:id="@+id/action_listIssuesFragment_to_issueDetailFragment"
@@ -18,5 +18,10 @@
         android:id="@+id/issueDetailFragment"
         android:name="com.example.kotlinissues.presentation.view.issuedetail.IssueDetailFragment"
         android:label="IssueDetailFragment"
-        tools:layout="@layout/fragment_issue_detail" />
+        tools:layout="@layout/fragment_issue_detail">
+        <argument
+            android:name="numberIssue"
+            android:defaultValue="-1L"
+            app:argType="long" />
+    </fragment>
 </navigation>

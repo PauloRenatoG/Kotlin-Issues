@@ -11,7 +11,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-class MainActivityViewModel @Inject constructor(
+class ListIssuesFragmentViewModel @Inject constructor(
     private val getListIssues: GetListIssues
 ) : BaseViewModel() {
 
