@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/listIssuesFragment">
+
+    <fragment
+        android:id="@+id/listIssuesFragment"
+        android:name="com.example.kotlinissues.presentation.view.listissues.ListIssuesFragment"
+        android:label="ListIssuesFragment"
+        tools:layout="@layout/fragment_list_issues">
+        <action
+            android:id="@+id/action_listIssuesFragment_to_issueDetailFragment"
+            app:destination="@id/issueDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/issueDetailFragment"
+        android:name="com.example.kotlinissues.presentation.view.issuedetail.IssueDetailFragment"
+        android:label="IssueDetailFragment"
+        tools:layout="@layout/fragment_issue_detail" />
+</navigation>

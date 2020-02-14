@@ -10,12 +10,12 @@ buildscript {
 
         // Kotlin
         kotlinVersion = '1.3.61'
-        kotlinCoreVersion = '1.1.0'
+        kotlinCoreVersion = '1.2.0'
 
         // Android
         appcompatVersion = '1.1.0'
         constraintlayoutVersion = '1.1.3'
-        materialVersion = '1.1.0-rc02'
+        materialVersion = '1.1.0'
         cardviewVersion = '1.0.0'
         recyclerviewVersion = '1.1.0'
 
@@ -37,6 +37,9 @@ buildscript {
         rxAndroid = '2.1.1'
         rxKotlin = '2.3.0'
         rxJava = '2.2.17'
+
+        // Navigation
+        navVersion = '2.2.1'
 
         //Tests
         junitVersion = '4.12'
