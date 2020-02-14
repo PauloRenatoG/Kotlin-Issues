@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Kotlin Issues</string>
+    <string name="status">Status:</string>
+    <string name="open_issue_on_github">Open issue on Github</string>
+    <string name="created_at">Create at: %s</string>
+    <string name="error_title">Error</string>
+    <string name="global_ok">Ok</string>
+</resources>
