@@ -25,18 +25,13 @@ class MainActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
+        lifecycle.addObserver(viewModel)
         subscribeUi()
         setupRecycler()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        viewModel.clearDisposable()
-    }
-
     private fun subscribeUi() {
         with(viewModel) {
-            getList()
             listIssues.observe(this@MainActivity, ::onListIssues)
             error.observe(this@MainActivity, ::onError)
         }

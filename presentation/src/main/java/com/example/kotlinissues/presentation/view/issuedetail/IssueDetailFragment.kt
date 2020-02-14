@@ -35,7 +35,7 @@ class IssueDetailFragment : BaseFragment() {
         binding = FragmentIssueDetailBinding.inflate(inflater, container, false)
 
         setClickListener()
-
+        lifecycle.addObserver(viewModel)
         return binding.root
     }
 
@@ -44,13 +44,7 @@ class IssueDetailFragment : BaseFragment() {
         with(viewModel) {
             issueDetail.observe(this@IssueDetailFragment, ::onIssueDetail)
             error.observe(this@IssueDetailFragment, ::onError)
-            getIssueDetail()
         }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        viewModel.clearDisposables()
     }
 
     private fun onIssueDetail(issueDetail: IssueDetail?) {
