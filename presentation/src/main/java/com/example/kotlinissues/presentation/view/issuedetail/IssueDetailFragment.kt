@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.navArgs
 import com.example.domain.entity.IssueDetail
 import com.example.kotlinissues.R
 import com.example.kotlinissues.databinding.FragmentIssueDetailBinding
@@ -21,7 +22,8 @@ import javax.inject.Inject
 class IssueDetailFragment : BaseFragment() {
 
     private lateinit var binding: FragmentIssueDetailBinding
-    val numberIssue: Long by lazy { arguments?.getLong(NUMBER_ISSUE_EXTRA) ?: -1L }
+    private val args by navArgs<IssueDetailFragmentArgs>()
+    val numberIssue: Long by lazy { args.numberIssue }
 
     @Inject
     protected lateinit var viewModel: IssueDetailViewModel
@@ -35,7 +37,7 @@ class IssueDetailFragment : BaseFragment() {
         binding = FragmentIssueDetailBinding.inflate(inflater, container, false)
 
         setClickListener()
-
+        lifecycle.addObserver(viewModel)
         return binding.root
     }
 
@@ -44,13 +46,7 @@ class IssueDetailFragment : BaseFragment() {
         with(viewModel) {
             issueDetail.observe(this@IssueDetailFragment, ::onIssueDetail)
             error.observe(this@IssueDetailFragment, ::onError)
-            getIssueDetail()
         }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        viewModel.clearDisposables()
     }
 
     private fun onIssueDetail(issueDetail: IssueDetail?) {
@@ -92,18 +88,5 @@ class IssueDetailFragment : BaseFragment() {
 
     private fun formatDate(date: Date): String {
         return SimpleDateFormat("dd/MM/YYYY", Locale("pt", "BR")).format(date)
-    }
-
-    companion object {
-        private const val NUMBER_ISSUE_EXTRA = "NUMBER_ISSUE_EXTRA"
-
-        fun newInstance(numberIssue: Long?): IssueDetailFragment {
-            val arguments = Bundle()
-            numberIssue?.let { arguments.putLong(NUMBER_ISSUE_EXTRA, it) }
-
-            return IssueDetailFragment().apply {
-                this.arguments = arguments
-            }
-        }
     }
 }
