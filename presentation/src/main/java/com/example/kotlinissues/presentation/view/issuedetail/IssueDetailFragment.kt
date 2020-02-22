@@ -13,6 +13,7 @@ import com.example.kotlinissues.R
 import com.example.kotlinissues.databinding.FragmentIssueDetailBinding
 import com.example.kotlinissues.presentation.util.base.BaseFragment
 import com.example.kotlinissues.presentation.util.observe
+import com.google.android.material.transition.MaterialFadeThrough
 import com.squareup.picasso.Picasso
 import java.text.SimpleDateFormat
 import java.util.*
@@ -27,6 +28,15 @@ class IssueDetailFragment : BaseFragment() {
 
     @Inject
     protected lateinit var viewModel: IssueDetailViewModel
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val forward = MaterialFadeThrough.create(requireContext()).setDuration(500)
+        enterTransition = forward
+
+        val backward = MaterialFadeThrough.create(requireContext()).setDuration(500)
+        exitTransition = backward
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,

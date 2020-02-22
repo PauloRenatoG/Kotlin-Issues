@@ -11,6 +11,7 @@ import com.example.kotlinissues.R
 import com.example.kotlinissues.databinding.FragmentListIssuesBinding
 import com.example.kotlinissues.presentation.util.base.BaseFragment
 import com.example.kotlinissues.presentation.util.observe
+import com.google.android.material.transition.MaterialFadeThrough
 import javax.inject.Inject
 
 class ListIssuesFragment : BaseFragment() {
@@ -21,6 +22,15 @@ class ListIssuesFragment : BaseFragment() {
     protected lateinit var viewModel: ListIssuesFragmentViewModel
 
     private var adapterListIssue: ListIssueAdapter = ListIssueAdapter { callbackItem(it) }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val backward = MaterialFadeThrough.create(requireContext()).setDuration(500)
+        enterTransition = backward
+
+        val forward = MaterialFadeThrough.create(requireContext()).setDuration(500)
+        exitTransition = forward
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
