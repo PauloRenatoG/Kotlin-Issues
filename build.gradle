@@ -18,8 +18,8 @@ buildscript {
         cardviewVersion = '1.0.0'
         recyclerviewVersion = '1.1.0'
 
-        // Picasso
-        picassoVersion = '2.71828'
+        // Glide
+        glideVersion = '4.11.0'
 
         // Dagger
         daggerVersion = '2.25.4'

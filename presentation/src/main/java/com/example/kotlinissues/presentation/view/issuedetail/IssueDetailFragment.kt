@@ -12,9 +12,10 @@ import com.example.domain.entity.IssueDetail
 import com.example.kotlinissues.R
 import com.example.kotlinissues.databinding.FragmentIssueDetailBinding
 import com.example.kotlinissues.presentation.util.base.BaseFragment
+import com.example.kotlinissues.presentation.util.loadImage
 import com.example.kotlinissues.presentation.util.observe
+import com.example.kotlinissues.presentation.util.setupToolbar
 import com.google.android.material.transition.MaterialFadeThrough
-import com.squareup.picasso.Picasso
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
@@ -45,6 +46,8 @@ class IssueDetailFragment : BaseFragment() {
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         binding = FragmentIssueDetailBinding.inflate(inflater, container, false)
+        setupToolbar(binding.includedToolbar.toolbar)
+        binding.includedToolbar.toolbar.setNavigationIcon(R.drawable.ic_arrow_back)
 
         setClickListener()
         lifecycle.addObserver(viewModel)
@@ -67,14 +70,8 @@ class IssueDetailFragment : BaseFragment() {
             issueDetail?.createdAt?.let {
                 textViewDate.text = getString(R.string.created_at, formatDate(it))
             }
+            avatarUser.loadImage(issueDetail?.user?.avatarUrl)
         }
-
-        Picasso
-            .get()
-            .load(issueDetail?.user?.avatarUrl)
-            .resize(250, 250)
-            .centerCrop()
-            .into(binding.avatarUser)
     }
 
     private fun onError(throwable: Throwable?) {
@@ -89,10 +86,15 @@ class IssueDetailFragment : BaseFragment() {
     }
 
     private fun setClickListener() {
-        binding.buttonOpenIssue.setOnClickListener {
-            val browserIntent =
-                Intent(Intent.ACTION_VIEW, Uri.parse(binding.issueDetail?.htmlUrl))
-            startActivity(browserIntent)
+        with(binding) {
+            buttonOpenIssue.setOnClickListener {
+                val browserIntent =
+                    Intent(Intent.ACTION_VIEW, Uri.parse(issueDetail?.htmlUrl))
+                startActivity(browserIntent)
+            }
+            includedToolbar.toolbar.setNavigationOnClickListener {
+                activity?.onBackPressed()
+            }
         }
     }
 
