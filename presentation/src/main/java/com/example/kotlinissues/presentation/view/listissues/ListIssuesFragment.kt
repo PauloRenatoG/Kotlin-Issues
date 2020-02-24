@@ -11,6 +11,7 @@ import com.example.kotlinissues.R
 import com.example.kotlinissues.databinding.FragmentListIssuesBinding
 import com.example.kotlinissues.presentation.util.base.BaseFragment
 import com.example.kotlinissues.presentation.util.observe
+import com.example.kotlinissues.presentation.util.setupToolbar
 import com.google.android.material.transition.MaterialFadeThrough
 import javax.inject.Inject
 
@@ -39,6 +40,7 @@ class ListIssuesFragment : BaseFragment() {
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         binding = FragmentListIssuesBinding.inflate(inflater, container, false)
+        setupToolbar(binding.includedToolbar.toolbar)
         lifecycle.addObserver(viewModel)
 
         return binding.root
