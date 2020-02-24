@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.paging.PagedList
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.domain.entity.ResponseIssues
 import com.example.kotlinissues.R
@@ -59,9 +60,9 @@ class ListIssuesFragment : BaseFragment() {
         }
     }
 
-    private fun onListIssues(listItens: List<ResponseIssues>?) {
+    private fun onListIssues(listItens: PagedList<ResponseIssues>?) {
         listItens?.let {
-            adapterListIssue.setItens(it)
+            adapterListIssue.submitList(it)
         }
         binding.progressBar.visibility = View.GONE
     }

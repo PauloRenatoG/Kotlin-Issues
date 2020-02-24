@@ -1,7 +1,7 @@
 package com.example.kotlinissues.presentation.graph.module
 
 import com.example.data.entity.ApiIssueDetail
-import com.example.data.entity.ApiReponseIssues
+import com.example.data.entity.ApiResponseIssues
 import com.example.data.entity.ApiUser
 import com.example.data.mappers.ApiIssueDetailToIssueDetailMapper
 import com.example.data.mappers.ApiResponseIssuesToResponseIssuesMapper
@@ -17,7 +17,7 @@ import dagger.Module
 interface MapperModule {
 
     @Binds
-    fun bindsApiResponseIssuesToResponseIssuesMapper(mapper: ApiResponseIssuesToResponseIssuesMapper): Mapper<ApiReponseIssues, ResponseIssues>
+    fun bindsApiResponseIssuesToResponseIssuesMapper(mapper: ApiResponseIssuesToResponseIssuesMapper): Mapper<ApiResponseIssues, ResponseIssues>
 
     @Binds
     fun bindsApiIssueDetailToIssueDetailMapper(mapper: ApiIssueDetailToIssueDetailMapper): Mapper<ApiIssueDetail, IssueDetail>
