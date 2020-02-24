@@ -1,8 +1,8 @@
 package com.example.domain.boundary
 
 import com.example.domain.entity.ResponseIssues
-import io.reactivex.Single
+import io.reactivex.Observable
 
 interface GetListIssuesRepository {
-    fun getListIssues(): Single<List<ResponseIssues>>
+    fun getListIssues(page: Long, perPage: Int): Observable<List<ResponseIssues>>
 }
