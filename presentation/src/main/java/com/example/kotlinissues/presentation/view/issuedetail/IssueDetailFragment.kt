@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import com.example.domain.entity.IssueDetail
 import com.example.kotlinissues.R
@@ -15,6 +16,7 @@ import com.example.kotlinissues.presentation.util.base.BaseFragment
 import com.example.kotlinissues.presentation.util.loadImage
 import com.example.kotlinissues.presentation.util.observe
 import com.example.kotlinissues.presentation.util.setupToolbar
+import com.example.kotlinissues.presentation.util.viewModelProvider
 import com.google.android.material.transition.MaterialFadeThrough
 import java.text.SimpleDateFormat
 import java.util.*
@@ -27,8 +29,10 @@ class IssueDetailFragment : BaseFragment() {
     private val args by navArgs<IssueDetailFragmentArgs>()
     val numberIssue: Long by lazy { args.numberIssue }
 
+    private lateinit var viewModel: IssueDetailViewModel
+
     @Inject
-    protected lateinit var viewModel: IssueDetailViewModel
+    protected lateinit var viewModelFactory: ViewModelProvider.Factory
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,6 +52,7 @@ class IssueDetailFragment : BaseFragment() {
         binding = FragmentIssueDetailBinding.inflate(inflater, container, false)
         setupToolbar(binding.includedToolbar.toolbar)
         binding.includedToolbar.toolbar.setNavigationIcon(R.drawable.ic_arrow_back)
+        viewModel = viewModelProvider(viewModelFactory)
 
         setClickListener()
         lifecycle.addObserver(viewModel)
