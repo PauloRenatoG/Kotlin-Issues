@@ -5,22 +5,38 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
+import androidx.paging.PagedList
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.domain.entity.ResponseIssues
 import com.example.kotlinissues.R
 import com.example.kotlinissues.databinding.FragmentListIssuesBinding
 import com.example.kotlinissues.presentation.util.base.BaseFragment
 import com.example.kotlinissues.presentation.util.observe
+import com.example.kotlinissues.presentation.util.setupToolbar
+import com.example.kotlinissues.presentation.util.viewModelProvider
+import com.google.android.material.transition.MaterialFadeThrough
 import javax.inject.Inject
 
 class ListIssuesFragment : BaseFragment() {
 
     private lateinit var binding: FragmentListIssuesBinding
 
+    private lateinit var viewModel: ListIssuesFragmentViewModel
+
     @Inject
-    protected lateinit var viewModel: ListIssuesFragmentViewModel
+    protected lateinit var viewModelFactory: ViewModelProvider.Factory
 
     private var adapterListIssue: ListIssueAdapter = ListIssueAdapter { callbackItem(it) }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val backward = MaterialFadeThrough.create(requireContext()).setDuration(500)
+        enterTransition = backward
+
+        val forward = MaterialFadeThrough.create(requireContext()).setDuration(500)
+        exitTransition = forward
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -29,6 +45,8 @@ class ListIssuesFragment : BaseFragment() {
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         binding = FragmentListIssuesBinding.inflate(inflater, container, false)
+        setupToolbar(binding.includedToolbar.toolbar)
+        viewModel = viewModelProvider(viewModelFactory)
         lifecycle.addObserver(viewModel)
 
         return binding.root
@@ -47,9 +65,9 @@ class ListIssuesFragment : BaseFragment() {
         }
     }
 
-    private fun onListIssues(listItens: List<ResponseIssues>?) {
+    private fun onListIssues(listItens: PagedList<ResponseIssues>?) {
         listItens?.let {
-            adapterListIssue.setItens(it)
+            adapterListIssue.submitList(it)
         }
         binding.progressBar.visibility = View.GONE
     }

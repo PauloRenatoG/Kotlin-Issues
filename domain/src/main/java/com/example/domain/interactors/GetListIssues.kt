@@ -6,5 +6,5 @@ import javax.inject.Inject
 class GetListIssues @Inject constructor(
     private val repository: GetListIssuesRepository
 ) {
-    fun execute() = repository.getListIssues()
+    fun execute(page: Long, perPage: Int) = repository.getListIssues(page, perPage)
 }
