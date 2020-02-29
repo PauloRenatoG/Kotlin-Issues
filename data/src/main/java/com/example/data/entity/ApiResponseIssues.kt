@@ -3,7 +3,7 @@ package com.example.data.entity
 
 import com.google.gson.annotations.SerializedName
 
-data class ApiReponseIssues(
+data class ApiResponseIssues(
     @SerializedName("id")
     val id: Long? = null,
     @SerializedName("number")

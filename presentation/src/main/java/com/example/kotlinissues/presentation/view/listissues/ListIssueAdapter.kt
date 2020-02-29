@@ -1,26 +1,37 @@
 package com.example.kotlinissues.presentation.view.listissues
 
 import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
+import androidx.paging.PagedListAdapter
+import androidx.recyclerview.widget.DiffUtil
 import com.example.domain.entity.ResponseIssues
 
 class ListIssueAdapter(
     private val callBack: (Long?) -> Unit
-) : RecyclerView.Adapter<ListIssueViewHolder>() {
-    private var listItens: List<ResponseIssues> = listOf()
+) : PagedListAdapter<ResponseIssues, ListIssueViewHolder>(DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListIssueViewHolder {
         return ListIssueViewHolder.inflate(parent, callBack)
     }
 
     override fun onBindViewHolder(holder: ListIssueViewHolder, position: Int) {
-        holder.bind(listItens[position])
+        getItem(position)?.let { holder.bind(it) }
     }
 
-    override fun getItemCount() = listItens.size
+    companion object {
+        val DIFF_CALLBACK = object : DiffUtil.ItemCallback<ResponseIssues>() {
+            override fun areItemsTheSame(
+                oldItem: ResponseIssues,
+                newItem: ResponseIssues
+            ): Boolean {
+                return oldItem.id == newItem.id
+            }
 
-    fun setItens(listItens: List<ResponseIssues>) {
-        this.listItens = listItens
-        notifyDataSetChanged()
+            override fun areContentsTheSame(
+                oldItem: ResponseIssues,
+                newItem: ResponseIssues
+            ): Boolean {
+                return oldItem == newItem
+            }
+        }
     }
 }

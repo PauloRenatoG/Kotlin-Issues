@@ -7,12 +7,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.navArgs
 import com.example.domain.entity.IssueDetail
 import com.example.kotlinissues.R
 import com.example.kotlinissues.databinding.FragmentIssueDetailBinding
 import com.example.kotlinissues.presentation.util.base.BaseFragment
+import com.example.kotlinissues.presentation.util.loadImage
 import com.example.kotlinissues.presentation.util.observe
-import com.squareup.picasso.Picasso
+import com.example.kotlinissues.presentation.util.setupToolbar
+import com.example.kotlinissues.presentation.util.viewModelProvider
+import com.google.android.material.transition.MaterialFadeThrough
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
@@ -21,10 +26,22 @@ import javax.inject.Inject
 class IssueDetailFragment : BaseFragment() {
 
     private lateinit var binding: FragmentIssueDetailBinding
-    val numberIssue: Long by lazy { arguments?.getLong(NUMBER_ISSUE_EXTRA) ?: -1L }
+    private val args by navArgs<IssueDetailFragmentArgs>()
+    val numberIssue: Long by lazy { args.numberIssue }
+
+    private lateinit var viewModel: IssueDetailViewModel
 
     @Inject
-    protected lateinit var viewModel: IssueDetailViewModel
+    protected lateinit var viewModelFactory: ViewModelProvider.Factory
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val forward = MaterialFadeThrough.create(requireContext()).setDuration(500)
+        enterTransition = forward
+
+        val backward = MaterialFadeThrough.create(requireContext()).setDuration(500)
+        exitTransition = backward
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,9 +50,12 @@ class IssueDetailFragment : BaseFragment() {
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         binding = FragmentIssueDetailBinding.inflate(inflater, container, false)
+        setupToolbar(binding.includedToolbar.toolbar)
+        binding.includedToolbar.toolbar.setNavigationIcon(R.drawable.ic_arrow_back)
+        viewModel = viewModelProvider(viewModelFactory)
 
         setClickListener()
-
+        lifecycle.addObserver(viewModel)
         return binding.root
     }
 
@@ -44,13 +64,7 @@ class IssueDetailFragment : BaseFragment() {
         with(viewModel) {
             issueDetail.observe(this@IssueDetailFragment, ::onIssueDetail)
             error.observe(this@IssueDetailFragment, ::onError)
-            getIssueDetail()
         }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        viewModel.clearDisposables()
     }
 
     private fun onIssueDetail(issueDetail: IssueDetail?) {
@@ -61,14 +75,8 @@ class IssueDetailFragment : BaseFragment() {
             issueDetail?.createdAt?.let {
                 textViewDate.text = getString(R.string.created_at, formatDate(it))
             }
+            avatarUser.loadImage(issueDetail?.user?.avatarUrl)
         }
-
-        Picasso
-            .get()
-            .load(issueDetail?.user?.avatarUrl)
-            .resize(250, 250)
-            .centerCrop()
-            .into(binding.avatarUser)
     }
 
     private fun onError(throwable: Throwable?) {
@@ -83,27 +91,19 @@ class IssueDetailFragment : BaseFragment() {
     }
 
     private fun setClickListener() {
-        binding.buttonOpenIssue.setOnClickListener {
-            val browserIntent =
-                Intent(Intent.ACTION_VIEW, Uri.parse(binding.issueDetail?.htmlUrl))
-            startActivity(browserIntent)
+        with(binding) {
+            buttonOpenIssue.setOnClickListener {
+                val browserIntent =
+                    Intent(Intent.ACTION_VIEW, Uri.parse(issueDetail?.htmlUrl))
+                startActivity(browserIntent)
+            }
+            includedToolbar.toolbar.setNavigationOnClickListener {
+                activity?.onBackPressed()
+            }
         }
     }
 
     private fun formatDate(date: Date): String {
         return SimpleDateFormat("dd/MM/YYYY", Locale("pt", "BR")).format(date)
-    }
-
-    companion object {
-        private const val NUMBER_ISSUE_EXTRA = "NUMBER_ISSUE_EXTRA"
-
-        fun newInstance(numberIssue: Long?): IssueDetailFragment {
-            val arguments = Bundle()
-            numberIssue?.let { arguments.putLong(NUMBER_ISSUE_EXTRA, it) }
-
-            return IssueDetailFragment().apply {
-                this.arguments = arguments
-            }
-        }
     }
 }
