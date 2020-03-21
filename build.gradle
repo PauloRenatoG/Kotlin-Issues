@@ -19,7 +19,7 @@ buildscript {
         recyclerviewVersion = '1.1.0'
 
         // Paging
-        pagingVersion = '2.1.1'
+        pagingVersion = '2.1.2'
 
         // Glide
         glideVersion = '4.11.0'
@@ -55,7 +55,7 @@ buildscript {
 
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.5.3'
+        classpath 'com.android.tools.build:gradle:3.6.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files

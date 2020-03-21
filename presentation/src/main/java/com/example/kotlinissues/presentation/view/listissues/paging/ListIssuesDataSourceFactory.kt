@@ -7,10 +7,11 @@ import io.reactivex.disposables.CompositeDisposable
 
 class ListIssuesDataSourceFactory constructor(
     private val getListIssues: GetListIssues,
-    private val disposable: CompositeDisposable
+    private val disposable: CompositeDisposable,
+    private val callbackError: (Throwable) -> Unit
 ) : DataSource.Factory<Long, ResponseIssues>() {
 
     override fun create(): DataSource<Long, ResponseIssues> {
-        return ListIssuesDataSource(getListIssues, disposable)
+        return ListIssuesDataSource(getListIssues, disposable, callbackError)
     }
 }
