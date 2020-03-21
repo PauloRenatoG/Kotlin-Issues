@@ -32,11 +32,11 @@ class ListIssuesFragmentViewModel @Inject constructor(
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     private fun getList() {
         RxPagedListBuilder(
-            ListIssuesDataSourceFactory(getListIssues, disposable),
+            ListIssuesDataSourceFactory(getListIssues, disposable, ::handleError),
             pagedListConfig
         )
             .buildObservable()
-            .subscribe(::onSuccess, ::handleError)
+            .subscribe(::onSuccess)
             .let(disposable::add)
     }
 
