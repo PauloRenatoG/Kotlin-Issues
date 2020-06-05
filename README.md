@@ -8,8 +8,8 @@ This sample project was developed to implement the clean architecture consuming 
 
 ## The App
 
-![device-2020-06-04-204425](/home/paulo/Imagens/device-2020-06-04-204425.png)
-![device-2020-06-04-204503](/home/paulo/Imagens/device-2020-06-04-204503.png)
+![device-2020-06-04-204425](https://github.com/PauloRenatoG/Kotlin-Issues/blob/master/images/device-2020-06-04-204425.png)
+![device-2020-06-04-204503](https://github.com/PauloRenatoG/Kotlin-Issues/blob/master/images/device-2020-06-04-204503.png)
 
 
 ## Author
