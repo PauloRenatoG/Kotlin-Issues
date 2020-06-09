@@ -8,9 +8,8 @@ This sample project was developed to implement the clean architecture consuming 
 
 ## The App
 
-![device-2020-06-04-204425](https://github.com/PauloRenatoG/Kotlin-Issues/blob/master/images/device-2020-06-04-204425.png)
-![device-2020-06-04-204503](https://github.com/PauloRenatoG/Kotlin-Issues/blob/master/images/device-2020-06-04-204503.png)
-
+<img src="https://github.com/PauloRenatoG/Kotlin-Issues/blob/master/images/device-2020-06-04-204425.png" alt="device-2020-06-04-204425" width="200" />
+<img src="https://github.com/PauloRenatoG/Kotlin-Issues/blob/master/images/device-2020-06-04-204503.png" alt="device-2020-06-04-204503" width="200" />
 
 ## Author
 - Paulo Renato da Silva Galindo - paulogalindo94@hotmail.com </br>
